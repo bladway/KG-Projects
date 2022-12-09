@@ -33,6 +33,10 @@ public class ObjReader {
 				++lineInd;
 				final List<String> wordsInLine = new ArrayList<>(Arrays.asList(line.split("\\s+")));
 				if (wordsInLine.isEmpty() || wordsInLine.get(0).equals("")) {
+					if (!scanner.hasNextLine()) {
+						break;
+					}
+					line = scanner.nextLine();
 					continue;
 				}
 				final String keyWord = wordsInLine.remove(0);

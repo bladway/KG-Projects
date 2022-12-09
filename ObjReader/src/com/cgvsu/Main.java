@@ -14,7 +14,7 @@ public class Main {
 /*реализация objReader строгое содержимое файла (никаких посторонних символов), большинство косяков
 выходят в исключениях, содержимое файла читается в любом порядке*/
     public static void main(String[] args) {
-        Path fileName = Path.of("../ObjModels/Trash/Тест НаРусском.obj");
+        Path fileName = Path.of("Teapot.obj");
         String fileContent;
         try {
             fileContent = Files.readString(fileName);
