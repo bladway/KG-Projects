@@ -18,8 +18,9 @@ public class ObjReader {
 	private static final String OBJ_FACE_TOKEN = "f";
 	private static final String OBJ_COMMENT_TOKEN = "#";
 	private static final String OBJ_GROUP_TOKEN = "g";
+	private static final String OBJ_EMPTY_TOKEN = "";
 
-	public static Model read(final String fileContent) {
+	public static Model read(final String fileContent, boolean writeInfo) {
 
 		Model resultModel = new Model();
 		int lineInd = 0;
@@ -32,7 +33,7 @@ public class ObjReader {
 			while (true) {
 				++lineInd;
 				final List<String> wordsInLine = new ArrayList<>(Arrays.asList(line.split("\\s+")));
-				if (wordsInLine.isEmpty() || wordsInLine.get(0).equals("")) {
+				if (wordsInLine.isEmpty()) {
 					if (!scanner.hasNextLine()) {
 						break;
 					}
@@ -45,8 +46,9 @@ public class ObjReader {
 					case OBJ_TEXTURE_TOKEN -> resultModel.getTextureVertices().add(parseTextureVertex(wordsInLine, lineInd));
 					case OBJ_NORMAL_TOKEN -> resultModel.getNormals().add(parseNormal(wordsInLine, lineInd));
 					case OBJ_FACE_TOKEN -> resultModel.getPolygons().add(parseFace(wordsInLine, lineInd));
-					case OBJ_COMMENT_TOKEN -> System.out.println("Comment on the line: " + lineInd);
-					case OBJ_GROUP_TOKEN -> System.out.println("Group not supported: " + lineInd);
+					case OBJ_COMMENT_TOKEN -> {if (writeInfo) System.out.println("Comment on the line: " + lineInd);}
+					case OBJ_GROUP_TOKEN -> {if (writeInfo) System.out.println("Group not supported: " + lineInd);}
+					case OBJ_EMPTY_TOKEN -> {}
 					default -> throw new ReaderExceptions.ObjReaderException("Wrong key word.", lineInd);
 				}
 				if (!scanner.hasNextLine()) {

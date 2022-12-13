@@ -396,7 +396,7 @@ class ObjReaderTest {
         try {
             Path fileName = Path.of("../ObjModels/Trash/Тест НаРусском.obj");
             String fileContent = Files.readString(fileName);
-            Model model = ObjReader.read(fileContent);
+            Model model = ObjReader.read(fileContent, false);
         } catch (IOException exception) {
             Assertions.fail();
         }
@@ -433,7 +433,7 @@ class ObjReaderTest {
                         "vt 7 8\n" +
                         "f 1/2/2 2/3/2 3/2/1\n" +
                         "f 5/3/1 4/2/1 3/2/2\n" +
-                        "f 2/2/2 3/2/3 5/3/3");
+                        "f 2/2/2 3/2/3 5/3/3", false);
         Assertions.assertTrue(equalsList(vertices, model.getVertices()));
         Assertions.assertTrue(equalsList(textureVertices, model.getTextureVertices()));
         Assertions.assertTrue(equalsList(normalVertices, model.getNormals()));
