@@ -279,7 +279,7 @@ class ObjReaderTest {
             ObjReader.parseFace(wordsInLineWithoutToken, 5);
             Assertions.assertTrue(false);
         } catch (ReaderExceptions.ObjReaderException exception) {
-            String expectedError = "Error parsing OBJ file on line: 5. Failed to parse int value.";
+            String expectedError = "Error parsing OBJ file on line: 5. Polygon vertex setting error.";
             Assertions.assertEquals(expectedError, exception.getMessage());
         }
     }
@@ -394,7 +394,7 @@ class ObjReaderTest {
     @Test
     public void testRussianReadFromDirectory() {
         try {
-            Path fileName = Path.of("../ObjModels/Trash/Тест НаРусском.obj");
+            Path fileName = Path.of("ObjModels/Trash/ТестНаРусском.obj");
             String fileContent = Files.readString(fileName);
             Model model = ObjReader.read(fileContent, false);
         } catch (IOException exception) {

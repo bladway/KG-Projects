@@ -127,25 +127,45 @@ public class ObjReader {
 			String[] someVertexDescriptionInString = wordInLine.split("/");
 			Integer[] someVertexDescription = new Integer[someVertexDescriptionInString.length];
 			for (int i = 0; i < someVertexDescriptionInString.length; i++) {
-				someVertexDescription[i] = Integer.parseInt(someVertexDescriptionInString[i]);
-				if (someVertexDescription[i] < 1) {
-					throw new ReaderExceptions.ObjReaderException("Some vector reference cannot be negative.", lineInd);
+				if (!someVertexDescriptionInString[i].equals("")) {
+					someVertexDescription[i] = Integer.parseInt(someVertexDescriptionInString[i]);
+				}
+				if (someVertexDescription[i] != null) {
+					if (someVertexDescription[i] < 1) {
+						throw new ReaderExceptions.ObjReaderException("Some vector reference cannot be negative.", lineInd);
+					}
 				}
 			}
 			switch (someVertexDescription.length) {
 				case 1 -> {
-					onePolygonVertexIndices.add(someVertexDescription[0] - 1);
+					if (someVertexDescription[0] != null) {
+						onePolygonVertexIndices.add(someVertexDescription[0] - 1);
+					} else {
+						throw new ReaderExceptions.ObjReaderException("Polygon vertex setting error.", lineInd);
+					}
 				}
 				case 2 -> {
-					onePolygonVertexIndices.add(someVertexDescription[0] - 1);
-					onePolygonTextureVertexIndices.add(someVertexDescription[1] - 1);
+					if (someVertexDescription[0] != null && someVertexDescription[1] != null) {
+						onePolygonVertexIndices.add(someVertexDescription[0] - 1);
+						onePolygonTextureVertexIndices.add(someVertexDescription[1] - 1);
+					} else {
+						throw new ReaderExceptions.ObjReaderException("Polygon vertex setting error.", lineInd);
+					}
 				}
 				case 3 -> {
-					onePolygonVertexIndices.add(someVertexDescription[0] - 1);
-					if (!someVertexDescriptionInString[1].equals("")) {
+					if (someVertexDescription[0] != null) {
+						onePolygonVertexIndices.add(someVertexDescription[0] - 1);
+					} else {
+						throw new ReaderExceptions.ObjReaderException("Polygon vertex setting error.", lineInd);
+					}
+					if (someVertexDescription[1] != null) {
 						onePolygonTextureVertexIndices.add(someVertexDescription[1] - 1);
 					}
-					onePolygonNormalIndices.add(someVertexDescription[2] - 1);
+					if (someVertexDescription[2] != null) {
+						onePolygonNormalIndices.add(someVertexDescription[2] - 1);
+					} else {
+						throw new ReaderExceptions.ObjReaderException("Polygon vertex setting error.", lineInd);
+					}
 				}
 				default -> throw new ReaderExceptions.ObjReaderException("Invalid element size.", lineInd);
 			}
